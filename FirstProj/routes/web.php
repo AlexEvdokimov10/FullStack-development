@@ -12,5 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('myTemplateBlade');
+    return view('home');
+});
+Route::get('/about',function(){
+	return view ('about');
+});
+Route::get('/fishs',function(){
+	return view('fishs');
 });
