@@ -3,11 +3,20 @@
 @section("app-title")
 Список риб
 @endsection
+@section("page-title")
+{{$pageTitle}}
+@endsection
 
 @section("page-content")
+
+
 <table>
 	<tr><th>Назва виду</th><th>Кількість</th></tr>
-	<tr><td>Рыба клоун</td><td>2</td></tr>
-	<tr><td>Рыба капля </td><td>1</td></tr>
+	<?php foreach ($fishs as $fish): ?>
+	<tr>
+		<td>{{$fish->getNameType()}}></td>
+		<td>{{$fish->getCount()}}</td>
+	</tr>
+<?php endforeach; ?>
 </table>
 @endsection
