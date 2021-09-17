@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('myTemplateBlade');
-});
+Route::get('/','App\Http\Controllers\PagesControler@home');
+Route::get('/about','App\Http\Controllers\PagesControler@about');
+Route::get('/fishs','App\Http\Controllers\PagesControler@fishs');
