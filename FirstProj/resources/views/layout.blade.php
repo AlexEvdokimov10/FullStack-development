@@ -2,19 +2,38 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}} ">
+<link rel="stylesheet" href="{{ asset("css/cover.css")  }}">
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"> </script>
+	<script src="{{asset("js/bootstrap.js")}}"></script>
+    <title>
 		@yield("app-title","Довідник риб")
 	</title>
 </head>
-<body>
-<ul>
-	<li><a href="/">Головна</a></li>
-	<li> <a href="/fishs"> Акваріум </a> </li>
-	<li> <a href="/about">Про проект</a> </li>
-</ul>
-<h1>
-	@yield("page-title")
-</h1>
-@yield("page-content")
+<body class="text-center">
+<div class="cover-containe d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <header class="masthead md-auto">
+        <div class="inner">
+            <h3 class="masthead-brand">@yield("app-title")</h3>
+        <nav class="nav nav-masthead justify-content-center">
+            <a href="/"> Головна </a>
+            <a href="/fishs"> Акваріум </a>
+            <a href="/about"> Про проект </a>
+        </nav>
+        </div>
+    </header>
+    <main role="main" class="inner cover">
+        <h1 class="cover-heading">
+            @yield("page-title")
+        </h1>
+        @yield("page-content")
+    </main>
+    <footer class="mastfoot mt-auto">
+        <div class="inner">
+            @yield("page-footer")
+        </div>
+    </footer>
+</div>
+
 </body>
 </html>
