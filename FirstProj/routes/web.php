@@ -11,6 +11,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/','App\Http\Controllers\PagesControler@home');
-Route::get('/about','App\Http\Controllers\PagesControler@about');
-Route::get('/fishs','App\Http\Controllers\PagesControler@fishs');
+Route::get('/','PagesControler@home');
+
+Route::get('/about','PagesControler@about');
+
+Route::resource('fishs',"FishsController");
+
+Route::resource('types',"TypeController");
+
+//Route::get('/types',"TypeController@index");
+//Route::get('/fishs',"FishsController@index");
+//Route::get('/fishs/create',"FishsController@create");
+//Route::post('/fishs',"FishsController@store");
+//Route::get('/fishs/{id}/edit',"FishsController@edit");
+//Route::patch('/fishs/{id}',"FishsController@update");
+//Route::delete('/fishs/{id}',"FishsController@destroy");
+//Route::get('/fishs/{id}',"FishsController@show");
+//Route::get('/fishs-json',"FishsController@getList");
