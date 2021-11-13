@@ -16,6 +16,10 @@ Route::get('/','PagesControler@home');
 Route::get('/about','PagesControler@about');
 
 Route::resource('fishs',"FishsController");
+
+Route::resource('types',"TypeController");
+
+//Route::get('/types',"TypeController@index");
 //Route::get('/fishs',"FishsController@index");
 //Route::get('/fishs/create',"FishsController@create");
 //Route::post('/fishs',"FishsController@store");

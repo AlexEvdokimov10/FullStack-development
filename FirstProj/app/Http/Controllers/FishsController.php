@@ -13,6 +13,7 @@ class FishsController extends Controller
             'pageTitle'=>'Список риб',
         ]);
     }
+    
     public function getList(){
         return \App\Fishs::all();
     }

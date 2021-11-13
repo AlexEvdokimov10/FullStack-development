@@ -16,9 +16,10 @@
         <div class="inner">
             <h3 class="masthead-brand">@yield("app-title")</h3>
         <nav class="nav nav-masthead justify-content-center">
-            <a href="/"> Головна </a>
-            <a href="/fishs"> Акваріум </a>
-            <a href="/about"> Про проект </a>
+            <a class="nav-link" href="/"> Головна </a>
+            <a class="nav-link" href="/types">Типи</a>
+            <a class="nav-link" href="/fishs"> Акваріум </a>
+            <a class="nav-link" href="/about"> Про проект </a>
         </nav>
         </div>
     </header>
