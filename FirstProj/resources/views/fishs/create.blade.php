@@ -8,41 +8,34 @@
     <form method="post" action="/fishs" class="text-left" class="text-left">
         {{csrf_field()}}
         <div class="form-count">
-            <label for="fish-name"> Назва типу</label>
-            <input  type="text" value="{{ old('fish-name') }}" class="form-control {{$errors->has('fish-name') ? 'is-invalid':''}} " name="fish-name" id="fish-name" placeholder="Ведіть ім'я">
-        <small class="form-text text-danger">
-            <ul>
-                @foreach($errors->get('fish-name') as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </small>
+            @include("includes/input",[
+    'fieldId'=>'fish-name','labelText'=>'Имя виду',
+    'placeHolderText'=>'Ведіть имя виду'
+])
         </div>
         <div class="form-count">
-            <label for="fish-count">
-                Кількість
+            @include("includes/input",[
+        'fieldId'=>'fish-count','labelText'=>'Кількість',
+        'placeHolderText'=>'Введіть кількість'
+        ])
+        </div>
+        <div class="form-count">
+            <label for="fish-type">
+                Загін
             </label>
-             <input required minlength="1" value="{{ old('fish-count') }}" maxlength="100" type="text" class="form-control {{ $errors->has('fish-count') ? 'is-invalid':'' }}" 
-            name="fish-count" id="fish-count" placeholder="Кількість"> 
-        </div>
-        <small class="form-text text-danger">
-           <ul>
-               @foreach($errors->get('fish-count') as $error)
-                   <li> {{$error}}</li>
-                   @endforeach           
-                </ul>
-       </small>
-        <div class="clearfix"></div>
-        @if($errors->any())
-        <div class="row border border-danger rounded text-danger" style="margin: 20px;padding: 10px;">
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
+            <select class="browser-default custom-select" name="fish-type" id="fish-type">
+                <option selected disabled value="0">
+                    Оберіть загін
+                </option>
+                @foreach($types as $type)
+                    <option value="{{ $type->id }}">{{ $type->number }} </option>
                 @endforeach
-            </ul>
+
+            </select>
+            @include('includes/validationErr',['errFieldName'=>'fish->type'])
         </div>
-        @endif
-       <button type="submit" class="btn btn-primary float-right">Додати </button>    
+       <button type="submit" class="btn btn-primary float-right">Додати </button>
+        <div class="clearfix"></div>
     </form>
 @endsection
 

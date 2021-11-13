@@ -20,6 +20,7 @@
         <tr>
             <th scope="col">Назва виду</th>
             <th scope="col">Кількість</th>
+            <th scope="col">Загін</th>
         </tr>
         </thead>
 
@@ -27,6 +28,7 @@
             <tr>
                 <td>{{ $fish->nameType }}</td>
                 <td>{{ $fish->count }}</td>
+                <td>{{ $fish->type->number  }}</td>
 
                 <td>
                     <a href="/fishs/{{$fish->id}}" class="btn btn-outline-secondary">Переглянути</a>

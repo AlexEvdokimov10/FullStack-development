@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Fishs;
+use App\Type;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+
 class FishsController extends Controller
 {
     public  function index(){
@@ -13,28 +16,33 @@ class FishsController extends Controller
             'pageTitle'=>'Список риб',
         ]);
     }
-    
+
     public function getList(){
         return \App\Fishs::all();
     }
     public  function create(){
-        return view('fishs/create');
+        return view('fishs/create',['types'=>Type::all()->sortBy('number')]);
     }
     public function store(){
        $data=request()->validate([
             'fish-name'=>['required','max:100'],
-            'fish-count'=>'required|min:1|max:10'
+            'fish-count'=>'required|min:1|max:10',
+           'fish-type'=>['required',Rule::exists('types','id')],
         ],[
             'fish-name.required'=>'Тип риби має бути заповнено',
             'fish-name.max'=>'Довжина не може перевищувати 100 символів',
             'fish-count.required'=>'Кількість риб',
             'fish-count.min'=>'Не менше 1 символу',
-            'fish-count.max'=>'Не більше 10 символів'
+            'fish-count.max'=>'Не більше 10 символів',
+           'fish-type.required'=>'Загін риб не може бути порожнім',
+           'fish-type.exists'=>'Ви обрали не існуючий загін'
         ]);
 
         \App\Fishs::create([
             'nameType'=>$data['fish-name'],
             'count'=>$data['fish-count'],
+            'type_id'=>$data['fish-type']
+
         ]);
        return redirect('/fishs');
     }
