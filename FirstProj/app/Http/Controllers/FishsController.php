@@ -9,34 +9,54 @@ use Illuminate\Validation\Rule;
 
 class FishsController extends Controller
 {
-    public  function index(){
-        $fishs=\App\Fishs::all()->sortBy("nameType");
+    private $type;
+    public function __construct(Request $request)
+    {
+        $this->type=Type::find($request->route('tpid'));
+        view()->share('type_filter_id',$request->route('tpid'));
+    }
+
+    public  function index($tp){
+        if($this->type){
+            $fishs=$this->type->fishs->sortBy("nameType");
+        }
+        else{
+
+            $fishs=\App\Fishs::all()->sortBy("nameType");
+        }
+
         return view('fishs/index',[
             'fishs'=>$fishs,
             'pageTitle'=>'Список риб',
+            'types'=>Type::all()->sortBy('nameType'),
         ]);
     }
 
     public function getList(){
         return \App\Fishs::all();
     }
-    public  function create(){
+    public  function create($tp){
         return view('fishs/create',['types'=>Type::all()->sortBy('number')]);
     }
-    public function store(){
-       $data=request()->validate([
+    public function validateData($data){
+        return $this->validate($data,[
             'fish-name'=>['required','max:100'],
             'fish-count'=>'required|min:1|max:10',
-           'fish-type'=>['required',Rule::exists('types','id')],
-        ],[
-            'fish-name.required'=>'Тип риби має бути заповнено',
-            'fish-name.max'=>'Довжина не може перевищувати 100 символів',
-            'fish-count.required'=>'Кількість риб',
-            'fish-count.min'=>'Не менше 1 символу',
-            'fish-count.max'=>'Не більше 10 символів',
-           'fish-type.required'=>'Загін риб не може бути порожнім',
-           'fish-type.exists'=>'Ви обрали не існуючий загін'
-        ]);
+            'fish-type'=>['required',Rule::exists('types','id')]
+            ],[
+                'fish-name.required'=>'Тип риби має бути заповнено',
+                'fish-name.max'=>'Довжина не може перевищувати 100 символів',
+                'fish-count.required'=>'Кількість риб',
+                'fish-count.min'=>'Не менше 1 символу',
+                'fish-count.max'=>'Не більше 10 символів',
+                'fish-type.required'=>'Загін риб не може бути порожнім',
+                'fish-type.exists'=>'Ви обрали не існуючий загін'
+            ]
+        );
+    }
+
+    public function store($tp){
+       $data=$this->validateData(\request());
 
         \App\Fishs::create([
             'nameType'=>$data['fish-name'],
@@ -44,36 +64,26 @@ class FishsController extends Controller
             'type_id'=>$data['fish-type']
 
         ]);
-       return redirect('/fishs');
+       return redirect('type/'.$tp.'/fishs');
     }
-    public function edit(\App\Fishs $fish){
-        return view('fishs/edit',['fish'=>$fish,]);
+    public function edit($tp,\App\Fishs $fish){
+        return view('fishs/edit',['fish'=>$fish,'types'=>Type::all()->sortBy('number')]);
     }
-    public  function update(\App\Fishs $fish){
-        $fish->update(
-            \request()->validate([
-                'nameType'=>['required','max:100'],
-                'count'=>'required|min:1|max:10',
-            ],[
-                'nameType.required'=>'Тип риби має бути заповнено',
-                'nameType.max'=>'Довжина не може перевищувати 100 символів',
-                'count.required'=>'Кількість риб',
-                'count.min'=>'Не менше 1 символу',
-                'count.max'=>'Не більше 10 символів',
-            ])
-        );
+    public  function update($tp,\App\Fishs $fish){
+        $data=$this->validateData(\request());
+        $fish->nameType=$data['fish-name'];
+        $fish->type()->associate(Type::find($data['fish-type']));
+        $fish->save();
 
 
 
-        return redirect('/fishs');
+        return redirect('type/'.$tp.'/fishs');
     }
-    public function destroy(\App\Fishs $fish){
+    public function destroy($tp,\App\Fishs $fish){
         $fish->delete();
     }
-    public function show(\App\Fishs $fish){
-        if(is_null($fish)) {
-            return "студент не існує";
-        }
+    public function show($tp,\App\Fishs $fish){
+
         return view('fishs/show',['fish'=>$fish]);
     }
 }

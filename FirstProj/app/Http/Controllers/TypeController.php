@@ -38,7 +38,7 @@ class TypeController extends Controller
     private function validateData($data): array
     {
         return $this->validate($data,[
-            'number'=>'required|min:3|max:10',
+            'number'=>'required|min:1|max:10',
             'squad'=>['required','max:100'],
             'fish_id'=>['required',Rule::exists('fishs','id')],
             [
@@ -71,7 +71,7 @@ class TypeController extends Controller
     public function edit(Type $type){
         return view('types/edit',[
             'type'=>$type,
-            'fishs'=>Fishs::all()->sortBy('nameType')
+            'fishs'=>$type->fishs->sortBy('nameType')
         ]);
     }
 

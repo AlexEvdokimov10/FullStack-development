@@ -12,5 +12,12 @@ class Type extends Model
             Fishs::class,'fish_id','id'
         );
     }
-   
+    public function fishs(){
+        return $this->hasMany(
+          Fishs::class,
+          'type_id',
+          'id'
+        );
+    }
+
 }

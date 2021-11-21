@@ -15,7 +15,7 @@
     <h5>
         Кількість {{$fish->count}}
     </h5>
-    <a href="/fishs" style="margin-top: 30px;" class="btn-outline-info">
+    <a href="/type/{{ $type_filter_id }}/fishs" style="margin-top: 30px;" class="btn-outline-info">
         Повертнутися до списку
     </a>
 @endsection

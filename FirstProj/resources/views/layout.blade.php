@@ -18,7 +18,7 @@
         <nav class="nav nav-masthead justify-content-center">
             <a class="nav-link" href="/"> Головна </a>
             <a class="nav-link" href="/types">Типи</a>
-            <a class="nav-link" href="/fishs"> Акваріум </a>
+            <a class="nav-link" href="/type/0/fishs"> Акваріум </a>
             <a class="nav-link" href="/about"> Про проект </a>
         </nav>
         </div>
