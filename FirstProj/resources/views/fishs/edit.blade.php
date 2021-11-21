@@ -4,44 +4,44 @@
 @section("page-title","Редагування риб")
 
 @section("page-content")
-    <form method="post" action="/fishs/{{$fish->id}}" class="text-left">
+    <form method="post" action="/type/{{ $type_filter_id }}/fishs/{{$fish->id}}" class="text-left">
         @csrf
 
         {{method_field("patch")}}
         <div class="form-count">
-            <label for="fish-name">
-                Тип риби
-            </label>
-            <input type="text" class="form-control {{$errors->has('nameType') ? 'is-invalid':''}}" name="nameType" id="fish-name" placeholder="Ведіть тип" value="{{ old('nameType') ? ('nameType'):$fish->nameType}}">
-        <small class="form-text text-danger">
-            <ul>
-                @foreach($errors->get('nameType') as $error)
-                    <li>
-                        {{$error}}
-                    </li>
-                @endforeach
-            </ul>
-        </small>
+            @include("includes/input",[
+    'fieldId'=>'fish-name','labelText'=>"Им'я типу",
+    'placeHolderText'=>"Введіть імя типу ",'fieldValue'=>$fish->nameType
+])
         </div>
         <div class="form-count">
-            <label for="fish-count">Кількість</label>
-            <input type="text" class="form-control {{$errors->has('count') ? 'is-invalid':''}}" name="count" id="fish-count" placeholder="Кількість" value="{{ old('count') ? old('count') :$fish->count}}">
-            <small class="form-text text-danger">
-                <ul>
-                    @foreach($errors->get('count') as $error)
-                        <li>
-                            {{$error}}
-                        </li>
-                    @endforeach
-                </ul>
-            </small>
+            @include("includes/input",[
+    'fieldId'=>'fish-count','labelText'=>"Кількість",
+    'placeHolderText'=>"Введіть кількість ",'fieldValue'=>$fish->count
+])
+        </div>
+        <div class="form-count">
+            <label for="fish-type">Загін</label>
+            <select class="browser-default custom-select" name="fish-type" id="fish-type">
+                <option selected disabled value="0">
+                    Оберіть загін
+                </option>
+                @foreach($types as $type)
+                    <option @if($fish->type->id==$type->id) selected @endif
+                    value="{{ $type->id  }}">
+                        {{ $type->number }}
+                    </option>
+                @endforeach
+            </select>
+            @include('includes/validationErr',['errFieldName'=>'fish-type'])
+        </div>
             <button type="submit" class="btn btn-primary float-right">
                 Змінити
             </button>
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
                 Видалити
             </button>
-        </div>
+
     </form>
 
 
@@ -80,14 +80,14 @@
                console.log('fdgdf');
                var id={!! $fish->id !!};
                $.ajax({
-                   url:'/fishs/'+id,
+                   url:'/type/{{ $type_filter_id }}/fishs/'+id,
                    type:'post',
                    data:{
                        _method:'delete',
                        _token:"{!! csrf_token() !!}"
                    },
                    success:function (msg){
-                       location.href="/fishs";
+                       location.href="/type/{{ $type_filter_id }}/fishs";
                    }
                });
            }) ;

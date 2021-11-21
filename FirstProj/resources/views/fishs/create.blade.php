@@ -5,7 +5,7 @@
 
 
 @section("page-content")
-    <form method="post" action="/fishs" class="text-left" class="text-left">
+    <form method="post" action="/type/{{ $type_filter_id }}/fishs" class="text-left" class="text-left">
         {{csrf_field()}}
         <div class="form-count">
             @include("includes/input",[
@@ -28,7 +28,7 @@
                     Оберіть загін
                 </option>
                 @foreach($types as $type)
-                    <option value="{{ $type->id }}">{{ $type->number }} </option>
+                    <option value="{{ $type->id }}" @if($type_filter_id==$type->id) selected @endif>{{ $type->number }} </option>
                 @endforeach
 
             </select>

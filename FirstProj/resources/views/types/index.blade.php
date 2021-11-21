@@ -21,6 +21,9 @@
         <td>{{ $type->number }}</td>
         <td>{{ $type->squad }}</td>
         <td><a href="/types/{{ $type->id }}" class="btn btn-outline-secondary"> Review </a>
+            <a href="/types/{{ $type->id }}" class="btn btn-outline-info">
+                Риби
+            </a>
         <a href="/types/{{ $type->id }}/edit" class="btn btn-outline-primary">Edit </a></td>
     </tr>
     @endforeach
